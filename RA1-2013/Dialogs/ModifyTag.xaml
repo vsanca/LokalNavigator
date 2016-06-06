@@ -1,0 +1,118 @@
+﻿<Window x:Class="RA1_2013.Dialogs.ModifyTag"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RA1_2013.Dialogs"
+        xmlns:l="clr-namespace:RA1_2013"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        mc:Ignorable="d"
+        Title="Upravljanje etiketama"  Height="520" Width="400" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize" Background="Orange" KeyDown="Window_KeyDown" l:HelpProvider.HelpKey="modifyTag" ToolTip="Upravljanje i prikaz etiketa. Pritisnite F1 za pomoć.">
+    <Grid Margin="5" l:HelpProvider.HelpKey="modifyTag">
+        <Grid.CommandBindings>
+            <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        </Grid.CommandBindings>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock l:HelpProvider.HelpKey="modifyTag" Grid.Row="0" VerticalAlignment="Bottom" Margin="10,0" FontSize="18" Text="Izmena etiketa:" Foreground="White"/>
+
+        <Border Grid.Row="1" Background="White" Margin="5,5,5,0" l:HelpProvider.HelpKey="modifyTag">
+            <DataGrid l:HelpProvider.HelpKey="modifyTag" ItemsSource="{Binding Path=tags}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionMode="Single" Margin="10,10,10,10" IsReadOnly="True" SelectedItem="{Binding Path=SelectedTag}" x:Name="Prikaz" SelectionChanged="Prikaz_SelectionChanged" ToolTip="Tabelarni prikaz etiketa.">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding label}" Width="2*" Header="Oznaka"/>
+                    <DataGridTextColumn Binding="{Binding description}" Width="5*" Header="Opis"/>
+                    <DataGridTemplateColumn Header="Boja" Width="1.5*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Rectangle Fill="{Binding color}"></Rectangle>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="5,0,5,0" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0">Pretraga:</TextBlock>
+            <toolkit:AutoCompleteBox l:HelpProvider.HelpKey="modifyTag" Grid.Column="1" x:Name="etikete" VerticalAlignment="Center" Margin="5,0,5,0" ValueMemberPath="label" Height="25" PreviewKeyDown="etikete_PreviewKeyDown" KeyDown="etikete_PreviewKeyDown" ToolTip="Pretraga i selekcija etikete. Pritisnite F1 za pomoć.">
+                <toolkit:AutoCompleteBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" ToolTip="{Binding description}">
+                            <Label Content="{Binding label}"></Label>
+                            <Label Width="20">
+                                <Label.Background>
+                                    <SolidColorBrush Color="{Binding color}"></SolidColorBrush>
+                                </Label.Background>
+                            </Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </toolkit:AutoCompleteBox.ItemTemplate>
+            </toolkit:AutoCompleteBox>
+        </Grid>
+
+        <Border Grid.Row="3" Margin="5,0,5,0" Background="White" BorderBrush="Black" BorderThickness="1" Padding="2" DataContext="{Binding Path=SelectedTag}">
+            <Grid Grid.Row="0" DataContext="{Binding ElementName=Prikaz,Path=SelectedItem}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock l:HelpProvider.HelpKey="modifyTag" Grid.Column="0" Grid.Row="0" Text="Oznaka:" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0"></TextBlock>
+                <xctk:WatermarkTextBox l:HelpProvider.HelpKey="modifyTag" Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" Margin="0,10,10,0" x:Name="oznakaTag" Watermark="Unesite oznaku etikete" ToolTip="Unos oznake etikete" Text="{Binding label}"/>
+
+                <TextBlock l:HelpProvider.HelpKey="modifyTag" Grid.Column="0" Grid.Row="1" Text="Boja:" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0"></TextBlock>
+                <xctk:ColorPicker l:HelpProvider.HelpKey="modifyTag" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Margin="0,10,10,0" x:Name="bojaTag" ToolTip="Izbor boje etikete" ShowStandardColors="True" ShowAvailableColors="False" SelectedColor="{Binding color}"/>
+
+                <TextBlock l:HelpProvider.HelpKey="modifyTag" Grid.Column="0" Grid.Row="2" Text="Opis:"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0"></TextBlock>
+                <xctk:WatermarkTextBox l:HelpProvider.HelpKey="modifyTag" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" AcceptsReturn="True" x:Name="opisTag" Watermark="Mesto za opis etikete." ToolTip="Opis etikete" Margin="0,10,10,10" Text="{Binding description}"/>
+
+            </Grid>
+        </Border>
+        <Border Grid.Row="4" Margin="5,0,5,0">
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button l:HelpProvider.HelpKey="modifyTag" Grid.Column="0" Name="brisanje" Click="brisanje_Click" ToolTip="Brisanje selektovane etikete.">
+                    <Button.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="Red" Offset="0"/>
+                            <GradientStop Color="#FFF55050" Offset="0.987"/>
+                        </RadialGradientBrush>
+                    </Button.Background>
+                    <TextBlock l:HelpProvider.HelpKey="modifyTag">Brisanje selekcije</TextBlock>
+                </Button>
+                <Button l:HelpProvider.HelpKey="modifyTag" Grid.Column="4" Name="kreiranje" Click="kreiranje_Click" ToolTip="Otvaranje dijaloga za kreiranje nove etikete.">
+                    <Button.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FF05BB0D" Offset="0"/>
+                            <GradientStop Color="#FF00EE0B" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Button.Background>
+                    <TextBlock l:HelpProvider.HelpKey="modifyTag">Nova etiketa</TextBlock>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

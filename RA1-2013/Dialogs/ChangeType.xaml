@@ -1,0 +1,68 @@
+﻿<Window x:Class="RA1_2013.Dialogs.ChangeType"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RA1_2013.Dialogs"
+        xmlns:l="clr-namespace:RA1_2013"
+        xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        mc:Ignorable="d"
+        Title="Izbor tipova lokala" Height="250" Width="500" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize" Background="RoyalBlue" l:HelpProvider.HelpKey="changeType" KeyDown="Window_KeyDown" ToolTip="Dijalog za promenu tipova lokalima.">
+    <Grid l:HelpProvider.HelpKey="changeType">
+        <Grid.CommandBindings>
+            <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        </Grid.CommandBindings>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="180"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid l:HelpProvider.HelpKey="changeType" x:Name="Prikaz" ItemsSource="{Binding Path=lokali_tip}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionMode="Extended" IsReadOnly="True" Margin="10,10,0,10" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" CanUserSortColumns="False" ToolTip="Tabelarni prikaz lokala kojima je potrebno izmeniti tip. Moguća je višestruka selekcija.">
+                <DataGrid.Columns>
+                <DataGridTextColumn l:HelpProvider.HelpKey="changeType" Binding="{Binding key}" Width="60" Header="Oznaka" FontWeight="Bold"/>
+                <DataGridTextColumn l:HelpProvider.HelpKey="changeType" Binding="{Binding name}" Width="1*" Header="Naziv"/>
+                <DataGridTextColumn l:HelpProvider.HelpKey="changeType" Binding="{Binding type}" Width="50" Header="Tip"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        <StackPanel l:HelpProvider.HelpKey="changeType" Grid.Column="2" Grid.Row="0" Margin="10" VerticalAlignment="Center">
+
+            <Button l:HelpProvider.HelpKey="changeType" Name="kreiranjeTip" Click="izbor_Click" Margin="10,0,10,5" HorizontalContentAlignment="Center">
+                <Button.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FF05BB0D" Offset="0"/>
+                        <GradientStop Color="#FF00EE0B" Offset="1"/>
+                    </RadialGradientBrush>
+                </Button.Background>
+                <TextBlock l:HelpProvider.HelpKey="changeType" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Izbor tipa selektovanim lokalima" TextAlignment="Center" ToolTip="Otvaranje dijaloga za izbor tipa selektovanim lokalima.">
+                </TextBlock>
+            </Button>
+
+            <Button l:HelpProvider.HelpKey="changeType" Name="primeniNaSve" Click="izborZaSve_Click" Margin="10,0,10,5" ToolTip="Otvaranje dijaloga za izbor tipa svim lokalima kojima je potrebno promeniti tip.">
+                <Button.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFBB9A05" Offset="0"/>
+                        <GradientStop Color="#FFE3EE00" Offset="1"/>
+                    </RadialGradientBrush>
+                </Button.Background>
+                <TextBlock l:HelpProvider.HelpKey="changeType">Izbor tipa za sve lokale</TextBlock>
+            </Button>
+
+            <Button l:HelpProvider.HelpKey="changeType" Name="brisanjeTip" Click="ponisti_Click" Margin="10,0,10,5" ToolTip="Poništavanje izmena i odustanak od brisanja tipa.">
+                <Button.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="#FFF55050" Offset="0.987"/>
+                    </RadialGradientBrush>
+                </Button.Background>
+                <TextBlock l:HelpProvider.HelpKey="changeType">Poništi brisanje tipa</TextBlock>
+            </Button>
+            
+        </StackPanel>
+
+    </Grid>
+</Window>

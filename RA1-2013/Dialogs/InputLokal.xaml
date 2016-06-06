@@ -1,0 +1,388 @@
+﻿<Window x:Class="RA1_2013.Dialogs.InputLokal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+        xmlns:local="clr-namespace:RA1_2013.Dialogs"
+        xmlns:model="clr-namespace:RA1_2013.Model"
+        xmlns:program ="clr-namespace:RA1_2013"
+        xmlns:validation ="clr-namespace:RA1_2013.Dialogs"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d"
+        Title="Dodaj lokal" Height="760" Width="500" x:Name="LokalInput" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize" Background="Green" x:FieldModifier="public" KeyDown="LokalInput_KeyDown" program:HelpProvider.HelpKey="NoviLokal" ToolTip="Dijalog za unos novog lokala. Pritisnite F1 za pomoć.">
+    <Grid program:HelpProvider.HelpKey="NoviLokal">
+        <Grid.CommandBindings>
+            <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+            <CommandBinding Command="New" CanExecute="Unos_Enabled_CanExecute" Executed="Unos_Enabled_Executed"/>
+        </Grid.CommandBindings>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Row="0" VerticalAlignment="Bottom" Margin="10,0" FontSize="18" Text="Unos novog lokala:" Foreground="White"/>
+        <Border program:HelpProvider.HelpKey="NoviLokal" Margin="10,4,10,0" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Background="White">
+            <Grid Margin="5,5,5,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="107"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="40*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Column="0" Grid.Row="0" Text="Naziv lokala:" VerticalAlignment="Top"  Margin="0,10,10,0" HorizontalAlignment="Right"></TextBlock>
+                <xctk:WatermarkTextBox program:HelpProvider.HelpKey="NoviLokal" Grid.Column="1" Grid.Row="0" Watermark="Unesite naziv lokala" ToolTip="Naziv lokala" VerticalAlignment="Top" Margin="0,10,10,0" x:Name="lokalNaziv" Height="22" Validation.Error="Validation_Error" x:FieldModifier="public">
+                    <xctk:WatermarkTextBox.Text>
+                        <Binding Path="naziv" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </xctk:WatermarkTextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+                </xctk:WatermarkTextBox>
+
+                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Column="0" Grid.Row="1" Text="Oznaka lokala:" VerticalAlignment="Top" Margin="0,10,10,0"  HorizontalAlignment="Right"/>
+                <xctk:WatermarkTextBox program:HelpProvider.HelpKey="NoviLokal" Grid.Column="1" Grid.Row="1" Watermark="Unesite jedinstvenu oznaku lokala" ToolTip="Oznaka lokala" VerticalAlignment="Top" Margin="0,10,10,0" x:Name="lokalOznaka" Height="22" Validation.Error="Validation_Error">
+                    <xctk:WatermarkTextBox.Text>
+                        <Binding Path="key" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                                <validation:UniqueLokalValidationRule ValidationStep="RawProposedValue"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </xctk:WatermarkTextBox.Text>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </xctk:WatermarkTextBox>
+
+                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Column="0" Grid.Row="2" Text="Tip lokala:" VerticalAlignment="Top" Margin="0,10,10,0"  HorizontalAlignment="Right"></TextBlock>
+                <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Margin="0,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <toolkit:AutoCompleteBox Grid.Column="0" Grid.Row="0" x:Name="tipLokala" VerticalAlignment="Center" Height="25" ToolTip="Izbor tipa lokala." FilterMode="Contains">
+                        <toolkit:AutoCompleteBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding description}">
+                                    <Label Content="{Binding key}" FontWeight="Bold"/>
+                                    <Label Content="{Binding name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:AutoCompleteBox.ItemTemplate>
+                    </toolkit:AutoCompleteBox>
+                    <Button Grid.Column="1" Grid.Row="0" Name="SelectTypeTable" Click="SelectTypeTable_Click" VerticalAlignment="Center" Height="25" ToolTip="Izbor tipa lokala iz tabele">
+                        <Image Source="/Resources/table.png" program:HelpProvider.HelpKey="NoviLokal"></Image>
+                    </Button>
+                    <Button Grid.Column="2" Grid.Row="0" Name="AddType" Click="AddType_Click" VerticalAlignment="Center" Height="25" ToolTip="Dodavanje novog tipa lokala">
+                        <Image Source="/Resources/add.png" program:HelpProvider.HelpKey="NoviLokal"></Image>
+                    </Button>
+                </Grid>
+
+                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Column="0" Grid.Row="3" Text="Služi alkohol:" VerticalAlignment="Top" Margin="0,10,10,0" HorizontalAlignment="Right"></TextBlock>
+                <GroupBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" Margin="0,10,10,0" Height="25" x:Name="Alkohol" ToolTip="Izbor služenja alkohola u lokalu">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" program:HelpProvider.HelpKey="NoviLokal">
+                        <RadioButton x:Name="ne_sluzi" IsChecked="True" program:HelpProvider.HelpKey="NoviLokal"></RadioButton>
+                        <RadioButton x:Name="do23" program:HelpProvider.HelpKey="NoviLokal"></RadioButton>
+                        <RadioButton x:Name="sluzi" program:HelpProvider.HelpKey="NoviLokal"></RadioButton>
+                    </StackPanel>
+                </GroupBox>
+
+                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Column="0" Grid.Row="4" Text="Cenovni rang:" VerticalAlignment="Top" Margin="0,10,10,0" HorizontalAlignment="Right"></TextBlock>
+
+                <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Top" Margin="0,10,10,0" Orientation="Vertical" ToolTip="Izbor cenovnog ranga lokala">
+                    <Slider program:HelpProvider.HelpKey="NoviLokal" x:Name="CenovniRang" IsSnapToTickEnabled="True" TickFrequency="25" Maximum="75" TickPlacement="BottomRight" Width="220"></Slider>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" program:HelpProvider.HelpKey="NoviLokal">
+                        <TextBlock Text="       Nizak" Width="80" FontSize="10">
+                            <TextBlock.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                            <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FF2EFF00" Offset="0.009"/>
+                                    <GradientStop Color="#FFE8FF00" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock Text="  Srednji" Width="65" FontSize="10">
+                            <TextBlock.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                            <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFE8FF00" Offset="0"/>
+                                    <GradientStop Color="#FFFFD100" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock Text="     Visok" Width="60" FontSize="10">
+                            <TextBlock.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                            <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFFFD100" Offset="0"/>
+                                    <GradientStop Color="#FFFF5100" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock Text=" Veoma visok" Width="70" FontSize="10">
+                            <TextBlock.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <LinearGradientBrush.RelativeTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                            <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFFF5100" Offset="0"/>
+                                    <GradientStop Color="Red" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Background>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="Etikete:" VerticalAlignment="Top" Margin="0,10,10,0" HorizontalAlignment="Right"></TextBlock>
+                <Grid Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" Margin="0,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="75"/>
+                    </Grid.RowDefinitions>
+                    <toolkit:AutoCompleteBox Grid.Column="0" Grid.Row="0" x:Name="etikete" VerticalAlignment="Top" ItemsSource="{Binding Path=tagOptions}" ValueMemberPath="label" SelectionChanged="etikete_SelectionChanged" Height="25" PreviewKeyDown="etikete_PreviewKeyDown" KeyDown="etikete_PreviewKeyDown" ToolTip="Pretraga i izbor etikete. Pritisnite F1 za pomoć.">
+                        <toolkit:AutoCompleteBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding description}">
+                                    <Label Content="{Binding label}"></Label>
+                                    <Label Width="20">
+                                        <Label.Background>
+                                            <SolidColorBrush Color="{Binding color}"></SolidColorBrush>
+                                        </Label.Background>
+                                    </Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:AutoCompleteBox.ItemTemplate>
+                    </toolkit:AutoCompleteBox>
+
+                    <Border program:HelpProvider.HelpKey="NoviLokal" BorderBrush="Silver" BorderThickness="1" Grid.Row="1" Grid.ColumnSpan="3" CornerRadius="3,3,3,3">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" program:HelpProvider.HelpKey="NoviLokal">
+                            <ItemsControl  x:Name="etikete_prikaz" Grid.ColumnSpan="3" ToolTip="Kontejner koji sadrži izabrane etikete lokala.">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Top"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button program:HelpProvider.HelpKey="NoviLokal" Height="25" Background="White" BorderThickness="1" BorderBrush="{Binding Path=color}" Margin="2">
+                                            <Button.Effect>
+                                                <DropShadowEffect Opacity="0.8" Color="#FF5B5B5B" BlurRadius="2" ShadowDepth="2"/>
+                                            </Button.Effect>
+                                            <Button.ToolTip>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Ellipse Width="10" Height="10" Fill="{Binding Path=color}"></Ellipse>
+                                                    <TextBlock Text="{Binding Path=description}"/>
+                                                </StackPanel>
+                                            </Button.ToolTip>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" program:HelpProvider.HelpKey="NoviLokal">
+                                                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Text="{Binding Path=label}" Background="White" Foreground="#FF200059"/>
+                                                <Button program:HelpProvider.HelpKey="NoviLokal" Content="x" BorderThickness="0" Click="Button_Click" Background="White" Foreground="#FF200059"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+
+                    <Button Grid.Column="1" Grid.Row="0" Name="SelectTagTable" Click="SelectTagTable_Click" VerticalAlignment="Center" Height="25" ToolTip="Izbor tipa lokala iz tabele">
+                        <Image Source="/Resources/table.png" program:HelpProvider.HelpKey="NoviLokal"></Image>
+                    </Button>
+
+                    <Button Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" Name="addTag" Click="addTag_Click" Height="25" ToolTip="Dodavanje nove etikete">
+                        <Image program:HelpProvider.HelpKey="NoviLokal" Source="/Resources/add.png"></Image>
+                    </Button>
+                </Grid>
+
+                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Column="0" Grid.Row="6" Text="Kapacitet lokala:" VerticalAlignment="Top" Margin="0,10,10,0" HorizontalAlignment="Right"></TextBlock>
+                <xctk:WatermarkTextBox program:HelpProvider.HelpKey="NoviLokal" Grid.Column="1" Grid.Row="6" Watermark="Unesite kapacitet lokala, primer: 20" ToolTip="Kapacitet lokala" VerticalAlignment="Top" Margin="0,10,10,0" x:Name="lokalKapacitet" Height="22">
+                    <xctk:WatermarkTextBox.Text>
+                        <Binding Path="kapacitet" UpdateSourceTrigger="PropertyChanged" TargetNullValue="">
+                            <Binding.ValidationRules>
+                                <validation:NumberValidationRule ValidationStep="ConvertedProposedValue" Min="0"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </xctk:WatermarkTextBox.Text>
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </xctk:WatermarkTextBox>
+
+                <TextBlock program:HelpProvider.HelpKey="NoviLokal" Grid.Column="0" Grid.Row="7" Text="Datum otvaranja:" VerticalAlignment="Top" Margin="0,10,10,0" HorizontalAlignment="Right"></TextBlock>
+                <DatePicker program:HelpProvider.HelpKey="NoviLokal" Grid.Column="1" Grid.Row="7" VerticalAlignment="Top" Margin="0,10,10,0" x:Name="lokalDatum" ToolTip="Izbor datuma otvaranja lokala" SelectedDate="{Binding Path=datum}"/>
+
+                <TextBlock Grid.Column="1" Grid.Row="8" Text="Opis:" VerticalAlignment="Bottom" Margin="0,0,10,0" HorizontalAlignment="Left"/>
+                <xctk:WatermarkTextBox program:HelpProvider.HelpKey="NoviLokal" Grid.Column="1" Grid.Row="9" Grid.RowSpan="3" Watermark="Mesto za detaljniji opis lokala." ToolTip="Opis lokala" VerticalAlignment="Top" TextWrapping="Wrap" AcceptsReturn="True" x:Name="lokalOpis" Height="110"/>
+
+                <Button Grid.Column="0" Grid.Row="8" Content="Dodaj ikonicu" Name="addIcon" Click="addIcon_Click" Margin="0,10,10,0" VerticalAlignment="Bottom"/>
+
+                <Border Grid.Column="0" Grid.Row="9" Grid.RowSpan="3" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" Margin="0,0,10,0" Height="110">
+                    <Image program:HelpProvider.HelpKey="NoviLokal" x:Name="ikonicaPrikaz" Stretch="Fill" MouseDown="ikonicaPrikaz_MouseDown" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Resources/lokal.png"></Image>
+                </Border>
+
+                <Grid Grid.Row="13" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="10,10,0,0" x:Name="lokalPusenje">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock><InlineUIContainer>
+            			<AccessText TextWrapping="Wrap" Text="Dozvoljeno pušenje" Width="60"/>
+            		</InlineUIContainer></TextBlock>
+                            <Image Source="/Resources/smoking.png" Width="40"></Image>
+                        </StackPanel>
+                    </CheckBox>
+
+                    <CheckBox Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="lokalRezervacije" ToolTip="Rezervacije">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock><InlineUIContainer>
+            			<AccessText TextWrapping="Wrap" Text="Rezervacije" Width="60" VerticalAlignment="Center"/>
+            		</InlineUIContainer></TextBlock>
+                            <Image Source="/Resources/reservations.png" Width="40"></Image>
+                        </StackPanel>
+                    </CheckBox>
+
+                    <CheckBox Grid.Column="5" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="lokalDostupnost">
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock><InlineUIContainer>
+            			<AccessText TextWrapping="Wrap" Text="Dostupan za hendikepirane" Width="80" VerticalAlignment="Center"/>
+            		</InlineUIContainer></TextBlock>
+                        <Image Source="/Resources/handicap_sign.png" Width="40"></Image>
+                        </StackPanel>
+                    </CheckBox>
+
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition  Width="20"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Name="CancelAdd" VerticalAlignment="Center" Height="20" Grid.Column="1" BorderBrush="DarkRed" BorderThickness="2" Click="CancelAdd_Click" ToolTip="Odustajanje od unosa lokala u bazu">
+                    <Button.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="Red" Offset="0"/>
+                            <GradientStop Color="#FFF55050" Offset="0.987"/>
+                        </RadialGradientBrush>
+                    </Button.Background>
+                    <TextBlock program:HelpProvider.HelpKey="NoviLokal">Otkaži unos</TextBlock>
+                </Button>
+                <Button Grid.Row="0" x:Name="ConfirmAdd" Click="ConfirmAdd_Click" Grid.Column="3" BorderBrush="DarkGreen" BorderThickness="3" ToolTip="Potvrda unosa lokala u bazu" Command="New">
+                    <Button.Background>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FF05BB0D" Offset="0"/>
+                            <GradientStop Color="#FF00EE0B" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Button.Background>
+                    <TextBlock program:HelpProvider.HelpKey="NoviLokal">Potvrdi unos</TextBlock>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
