@@ -1,1 +1,2 @@
 C:\Users\Viktor\Source\Workspaces\HCI\RA1-2013-Better_GUI\RA1-2013\bin\Debug\RA1-2013.exe.config
+C:\Users\Viktor\Source\Repos\LokalNavigator\RA1-2013\bin\Debug\RA1-2013.exe.config

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Viktor\Source\Workspaces\HCI\RA1-2013-Better_GUI\RA1-2013\obj\Debug\
+C:\Users\Viktor\Source\Repos\LokalNavigator\RA1-2013\obj\Debug\
 RA1_2013
 none
 false
 DEBUG;TRACE
-C:\Users\Viktor\Source\Workspaces\HCI\RA1-2013-Better_GUI\RA1-2013\App.xaml
+C:\Users\Viktor\Source\Repos\LokalNavigator\RA1-2013\App.xaml
 16-1373994365
 26-1284879557
 282036636735
-28-618669776
+28-1148789192
 Dialogs\ChangeType.xaml;Dialogs\InputLokal.xaml;Dialogs\InputTag.xaml;Dialogs\InputType.xaml;Dialogs\ModifyTag.xaml;Dialogs\ModifyType.xaml;Dialogs\Obavestenje.xaml;Dialogs\TagTable.xaml;Dialogs\TypeTable.xaml;HelpViewer.xaml;MainWindow.xaml;Themes\Metro\Metro.MSControls.Core.Implicit.xaml;Themes\Metro\Metro.MSControls.Toolkit.Implicit.xaml;Themes\Metro\Styles.Shared.xaml;Themes\Metro\Styles.WPF.xaml;Themes\Metro\Theme.Colors.xaml;
 
 False
